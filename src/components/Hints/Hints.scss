@@ -24,7 +24,7 @@
 .status-bar-item {
   position: absolute;
   z-index: 10;
-}
+} 
 .itm--skullR {
   left: 25%;
   top: 45%;
@@ -118,13 +118,13 @@
 }
 
 .tut__title {
-  margin: 0 0 18px;
-  font-family: "YS-Text-Cond-Bold", system-ui, sans-serif;
+margin-bottom: 20px;  font-family: "YS-Text-Cond-Bold", system-ui, sans-serif;
   font-weight: 800;
   font-size: clamp(18px, 5.6vw, 24px);
   line-height: 1.05;
   color: #000;
   text-shadow: 0 2px 0 #fff4, 0 8px 18px rgba(0, 0, 0, 0.35);
+  padding: 0 25px;
 }
 
 .tut__art--boat {
@@ -157,6 +157,7 @@
   .mask {
     width: clamp(68px, 24vw, 90px);
     filter: drop-shadow(0 6px 10px rgba(0, 0, 0, 0.35));
+    transform: translateY(60%);
   }
 }
 
@@ -171,7 +172,7 @@
   display: grid;
   grid-template-columns: 48px 1fr;
   align-items: center;
-  gap: 18px;
+  gap: 25px;
   padding: 20px 14px;
   border-radius: 15px;
   background: #ffffff;

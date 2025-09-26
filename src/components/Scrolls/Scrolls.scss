@@ -135,7 +135,7 @@
   transform: translateY(1px) scale(0.995);
 }
 
-/* MODAL: затемнение + центрированный свиток на всю ширину */
+/* MODAL */
 .scrolls__modal {
   position: fixed;
   inset: 0;
@@ -174,7 +174,7 @@
   display: grid;
   place-items: center;
   background: url("/icons/scrolls/open-scroll.png") center / contain no-repeat;
-  padding: 30px 35px 10px;
+  padding: 35px 25px 10px;
 }
 .modal__seal {
   position: absolute;
@@ -194,7 +194,7 @@
   color: #fff;
   text-align: center;
   font-family: "YS-Text-Cond-Bold", system-ui, sans-serif;
-  font-size: 18px;
+  font-size: 12px;
   line-height: 1.25;
   max-width: 80%;
 }
@@ -206,20 +206,5 @@
 }
 
 @media (max-width: 360px) {
-  .scrolls__grid {
-    gap: 12px 12px;
-    padding: 10px 12px 20px;
-  }
-  .slot {
-    height: 78px;
-  }
-  .slot--full .slot__badge {
-    width: 28px;
-    height: 28px;
-  }
 
-
-  .modal__text {
-    font-size: 16px;
-  }
 }

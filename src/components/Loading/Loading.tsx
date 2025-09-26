@@ -77,10 +77,8 @@ export default function Loading() {
     };
 
     const effectiveUserId = parseTgUserId() ?? getUserIdFromQuery();
-    // Чтобы TS не ругался на «неиспользуемо», а заодно можно дебажить:
     (window as any).__uid = effectiveUserId ?? null;
 
-    // --- ассеты для прелоада ---
     const soonAssets = [
       // Loading / фон
       "/images/loader-waves.png",
@@ -131,9 +129,28 @@ export default function Loading() {
       "/icons/ship-crashed.png",
     ];
 
-    // --- тайминги ---
-    const HARD_TIMEOUT_MS = 3000; // принудительный переход, если что-то зависло
-    const EXTRA_AFTER_PRELOAD_MS = 2000; // +2 секунды «после прелоада» (как просил)
+    const preloadBg = (href: string) => {
+      const l = document.createElement("link");
+      l.rel = "preload";
+      l.as = "image";
+      l.href = href;
+      document.head.appendChild(l);
+    };
+    [
+      "/images/loader-waves.png",
+      "/images/OnBoardingTop.svg",
+      "/images/OnBoardingBotWBlur.png",
+      "/images/OB1.jpg",
+      "/images/hint-field.svg",
+      "/images/game-water.svg",
+      "/images/river-banks-mask.png",
+      "/images/houses.svg",
+      "/icons/scrolls/open-scroll.png",
+      "/images/scrolls-bg.png",
+    ].forEach(preloadBg);
+
+    const HARD_TIMEOUT_MS = 3000;
+    const EXTRA_AFTER_PRELOAD_MS = 3000;
 
     let navigated = false;
     let afterTimer: number | undefined;
@@ -146,8 +163,8 @@ export default function Loading() {
 
     const hard = window.setTimeout(go, HARD_TIMEOUT_MS);
 
-    preloadImages(soonAssets).finally(() => {
-      // даём ровно +2 секунды поверх фактической подгрузки
+    const uniqueAssets = Array.from(new Set(soonAssets));
+    preloadImages(uniqueAssets).finally(() => {
       afterTimer = window.setTimeout(() => {
         requestAnimationFrame(go);
       }, EXTRA_AFTER_PRELOAD_MS);
@@ -167,11 +184,15 @@ export default function Loading() {
             src="/icons/yandex-logo.svg"
             alt="Яндекс Книги"
             className="Loading__logo"
+            loading="eager"
+            fetchPriority="high"
           />
           <img
             src="/icons/loading-skull.svg"
             alt="Pelevin Skull"
             className="Loading__skull"
+            loading="eager"
+            fetchPriority="high"
           />
           <img
             src="/icons/a_sinistra.svg"

@@ -4,9 +4,7 @@ import Button from "../Button/Button";
 import { useNavigate } from "react-router-dom";
 import appRoutes from "../../routes/routes";
 
-// type HintsProps = {
-//   onFinish?: () => void;
-// };
+
 
 export default function Hints() {
   const [step, setStep] = useState(0);
@@ -24,7 +22,7 @@ export default function Hints() {
       next();
     }
   };
-
+ 
   return (
     <div className="hints">
       <img className="hint-score" src="/images/hint-score.svg" alt="" />
@@ -96,10 +94,9 @@ export default function Hints() {
             />
 
             <h2 className="tut__title">
-              Это твоя гондола
+              А вот и гондола
               <br />
-              управляй ей нажатиями
-              <br />в левую или правую часть экрана
+              Управляйте ей, нажимая на левую или правую часть экрана
             </h2>
 
             <div className="tut__art tut__art--boat">
@@ -134,11 +131,7 @@ export default function Hints() {
             />
 
             <h2 className="tut__title">
-              Маски накреняют твоё судно,
-              <br />
-              старайся держать уровень крена
-              <br />
-              по центру
+              Избегайте масок и сохраняйте уровень крена гондолы по центру
             </h2>
 
             <div className="tut__art tut__art--tilt">

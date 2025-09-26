@@ -21,7 +21,7 @@ export default function Scrolls({
     onOpen?.(n);
     setOpenId(n);
   };
-  
+
   return (
     <div className="scrolls">
       <header className="scrolls__hdr">
@@ -81,9 +81,14 @@ export default function Scrolls({
             <div className="modal__scroll">
               <span className="modal__seal">{openId}</span>
               <p className="modal__text">
-                Lorem ipsum dolor sit amet consectetur. Tortor fames viverra
-                habitant proin. Ornare suspendisse varius mattis non nisl in. Ut
-                ut iaculis dictumst tellus viverra tincidunt.
+                Гольденштерн и Розенкранц — мифологические основатели
+                Transhumanism Inc., которая управляет всей вселенной Пелевина.
+                Сведения о Г. и Р. противоречивые, как и о любых легендарных
+                героях: мы знаем (ну как «знаем» – скоморох говорил), что
+                Гольденштерн придумал знаменитые банки для мозгов, а Розенкранц,
+                возможно, был первым топ-менеджером корпорации. А может быть, и
+                не был. А может быть, они – один человек. Всей правды мы не
+                узнаем.
               </p>
             </div>
 

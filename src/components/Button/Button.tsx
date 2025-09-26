@@ -15,7 +15,7 @@ type ButtonProps = {
   glass?: boolean;
   blur?: number;
 };
-
+ 
 export default function Button({
   text,
   bg = "#ffffff",

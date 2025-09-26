@@ -5,7 +5,7 @@ import appRoutes from "../../routes/routes";
 
 export default function OnBoarding1() {
   const navigate = useNavigate();
- 
+
   return (
     <div className="onboarding1">
       <div className="onboarding1__top">
@@ -14,29 +14,28 @@ export default function OnBoarding1() {
           alt="Pelevin Cover"
           className="onboarding1__card"
         />
-      </div> 
+      </div>
       <div className="onboarding1__bot">
         <div className="onboarding1__bot-content">
           <h1 className="onboarding1__bot-title">
-            Заголовок онбординга <br /> в две строки
+            Добро пожаловать в корпорацию <br /> «TRANSHUMANISM INC.»
           </h1>
           <p className="onboarding1__bot-text">
-            Lorem ipsum dolor sit amet consectetur. Congue ante donec viverra
-            luctus laoreet. Gravida a lacinia lobortis vestibulum. Pretium enim
-            feugiat viverra pellentesque sagittis pulvinar id. Neque ante
-            adipiscing integer cras convallis cursus.
+            Мы всегда рады новым сотрудникам! Сразу к делу: ваш напарник Маркус
+            Зоргенфрей уже отправился искать наших клиентов в XVI век.<br/><br /> Лучше вам
+            не ждать и поплыть следом
           </p>
         </div>
 
         <div className="onboarding1__bot-buttons">
           <Button
-            text="Продолжить"
+            text="Отправиться к гондоле"
             bg="#FFFFFF"
             color="#000000"
             onClick={() => navigate(appRoutes.ONBOARDING2)}
           />
           <Button
-            text="Читать или слушать книгу"
+            text="Слушать и читать A Sinistra в Яндекс Книгах"
             bg="#FFFFFF14"
             color="#FFFFFF"
             border="1px solid rgba(255,255,255,0.2)"

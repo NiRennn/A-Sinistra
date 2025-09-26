@@ -9,21 +9,60 @@
     env(safe-area-inset-bottom) env(safe-area-inset-left);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  padding-top: 92px;
-  padding-bottom: 40px;
+  padding-top: 70px;
+  padding-bottom: 35px;
 }
 
 /* HUD */
 .Game__hud {
-  position: absolute;
+  position: relative;
   z-index: 100;
-  top: 10%;
-  left: 50%;
-  transform: translateX(-50%);
-  width: min(320px, 94vw);
-  height: auto;
+  width: 100%;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 12px;
 }
- 
+
+.Game__hud > :first-child {
+  flex: 0 0 40px;
+  height: 40px;
+}
+
+.Game__hud .score {
+  width: min(320px, 94vw);
+  // margin: 0 auto;
+}
+
+.Game__hud-audio {
+  flex: 0 0 40px;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.Game__hud-audio-button {
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  border: none;
+  transform: translateY(100%);
+  border-radius: 50%;
+  background: transparent;
+  cursor: pointer;
+  touch-action: manipulation;
+
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.28), 0 8px 18px rgba(0, 0, 0, 0.35);
+
+  img {
+    display: block;
+    pointer-events: none;
+    user-select: none;
+    width: 40px;
+    height: 40px;
+  }
+}
+
 /* Поле */
 .Game__field {
   position: absolute;
@@ -161,7 +200,7 @@
   display: flex;
   // gap: 22px;
   align-items: flex-end;
-  font-family: 'YS-Text-Cond-Regular';
+  font-family: "YS-Text-Cond-Regular";
 }
 .gauge {
   width: 132px;
@@ -170,7 +209,6 @@
   display: grid;
   place-items: center;
   position: relative;
-  
 }
 
 .gauge__rotor {
@@ -187,7 +225,7 @@
   width: 80px;
   height: 80px;
   display: block;
-  filter: drop-shadow(0 4px 8px rgba(0,0,0,.35));
+  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.35));
 }
 
 .gauge__arc {
@@ -201,7 +239,7 @@
 }
 
 .gauge__arc--top {
-  top: 12px;       /* подвинь ближе/дальше к иконке по вкусу */
+  top: 12px; /* подвинь ближе/дальше к иконке по вкусу */
   z-index: 2;
 }
 
@@ -219,8 +257,6 @@
 .gauge--warn .gauge__text {
   stroke-width: 2.2px;
 }
-
-
 
 /* левый — крутилка */
 .gauge--tilt .gauge__dial {
@@ -303,5 +339,21 @@
   }
   .Game__field {
     --gutter: 56px;
+  }
+}
+
+@media (max-width: 360px) {
+  .Game__hud > :first-child,
+  .Game__hud-audio {
+    flex-basis: 36px;
+  }
+
+  .Game__hud-audio-button {
+    width: 36px;
+    height: 36px;
+    img {
+      width: 36px;
+      height: 36px;
+    }
   }
 }

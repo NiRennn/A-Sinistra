@@ -25,12 +25,25 @@
   transform: rotate(-12deg);
   width: clamp(220px, 70vw, 310px);
   height: auto;
-  height: auto;
   pointer-events: none;
   user-select: none;
   z-index: 10;
   border-radius: 9px;
+
+  /* более насыщённая многослойная тень */
+  box-shadow:
+    0 24px 56px -8px rgba(0, 0, 0, 0.60),  /* глубокая */
+    0 14px 28px -8px rgba(0, 0, 0, 0.50),  /* средняя */
+    0 4px 10px rgba(0, 0, 0, 0.40);        /* контактная */
+
+  /* лёгкий светлый кант для читаемости на тёмном фоне */
+  outline: 1px solid rgba(255, 255, 255, 0.10);
+  outline-offset: -1px;
+
+  will-change: transform;
 }
+
+
 
 .onboarding1__bot {
   width: 100%;

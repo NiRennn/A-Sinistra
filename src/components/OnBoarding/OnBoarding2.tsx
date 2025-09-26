@@ -14,11 +14,11 @@ export default function OnBoarding2() {
           alt="Houses"
           className="onboarding2__houses"
         />
-        <img 
+        <img
           src="/images/OB2_ship.svg"
           alt="Ship"
           className="onboarding2__ship"
-        /> 
+        />
         <img
           src="/icons/game-icons/coin.svg"
           alt="Coin"
@@ -29,14 +29,11 @@ export default function OnBoarding2() {
       <div className="onboarding2__bot">
         <div></div>
         <div className="onboarding2__bot-content">
-          <h1 className="onboarding2__bot-title">
-            Заголовок онбординга <br /> в две строки
-          </h1>
+          <h1 className="onboarding2__bot-title">Чувствуем, мы сработаемся!</h1>
           <p className="onboarding2__bot-text">
-            Lorem ipsum dolor sit amet consectetur. Congue ante donec viverra
-            luctus laoreet. Gravida a lacinia lobortis vestibulum. Pretium enim
-            feugiat viverra pellentesque sagittis pulvinar id. Neque ante
-            adipiscing integer cras convallis cursus.
+            Постарайтесь не топить и не перегружать гондолу. Небольшой совет:
+            собирайте по пути бумажные свитки — они помогут больше узнать о
+            нашей корпорации и вселенной
           </p>
         </div>
 
@@ -47,7 +44,6 @@ export default function OnBoarding2() {
             bg="#FFCD11"
             color="#000000"
             onClick={() => navigate(appRoutes.HINTS)}
-
           />
         </div>
       </div>

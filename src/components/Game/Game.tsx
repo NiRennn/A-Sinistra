@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import appRoutes from "../../routes/routes";
 import "./Game.scss";
 import Score from "../Score/Score";
+import Button from "../Button/Button";
 
 type ItemType = "coin" | "bar" | "skullL" | "skullR" | "scroll";
 type Item = {
@@ -82,6 +83,21 @@ export default function Game() {
   const [bars, setBars] = useState(0);
   const [tilt, setTilt] = useState(0);
   const [scrolls, setScrolls] = useState(0);
+  const [openScrollId, setOpenScrollId] = useState<number | null>(null);
+  const [soundOn, setSoundOn] = useState<boolean>(() => {
+    return localStorage.getItem("soundOn") !== "0"; // по умолчанию звук включён
+  });
+
+  const toggleSound = () => {
+    setSoundOn((prev) => {
+      const next = !prev;
+      localStorage.setItem("soundOn", next ? "1" : "0");
+      window.dispatchEvent(
+        new CustomEvent("sound-toggle", { detail: { on: next } })
+      );
+      return next;
+    });
+  };
 
   const [running, setRunning] = useState(true);
 
@@ -156,7 +172,16 @@ export default function Game() {
                 setTilt((v) => Math.max(-MAX_TILT, v - 1));
               if (it.type === "skullR")
                 setTilt((v) => Math.min(MAX_TILT, v + 1));
-              if (it.type === "scroll") setScrolls((s) => s + 1);
+              if (it.type === "scroll") {
+                it.collected = true;
+                // увеличиваем счётчик, открываем модалку с номером и ставим игру на паузу
+                setScrolls((s) => {
+                  const nextVal = s + 1;
+                  setOpenScrollId(nextVal);
+                  setRunning(false); // пауза
+                  return nextVal;
+                });
+              }
             }
           }
           return next.filter((i) => !i.collected);
@@ -183,6 +208,14 @@ export default function Game() {
     raf = requestAnimationFrame(loop);
     return () => cancelAnimationFrame(raf);
   }, [running, lane]);
+
+  const getScrollText = () =>
+    "Гольденштерн и Розенкранц — мифологические основатели Transhumanism Inc., которая управляет всей вселенной Пелевина. Сведения о Г. и Р. противоречивые... Всей правды мы не узнаем.";
+
+  const closeScrollModal = () => {
+    setOpenScrollId(null);
+    setRunning(true); // продолжить игру
+  };
 
   // ===== перехoд на экран проигрыша по причине =====
   const navigate = useNavigate();
@@ -212,17 +245,6 @@ export default function Game() {
     }
   }, [coins, bars, tilt, running, navigate]);
 
-  // const reset = () => {
-  //   setItems([]);
-  //   setCoins(0);
-  //   setBars(0);
-  //   setTilt(0);
-  //   setLane(1);
-  //   setRunning(true);
-  //   setResult(null);
-  //   navigatedRef.current = false;
-  // };
-
   const tiltLabel =
     tilt === 0
       ? "Крен в норме"
@@ -235,12 +257,31 @@ export default function Game() {
     <div className="Game">
       {/* HUD */}
       <div className="Game__hud">
+        <div></div>
+
         <Score
           coins={coins}
           coinsTarget={TARGET_COINS}
           scrolls={scrolls}
           scrollsTarget={TARGET_SCROLLS}
         />
+
+        <div className="Game__hud-audio">
+          <button
+            className="Game__hud-audio-button"
+            onClick={toggleSound}
+            aria-label={soundOn ? "Выключить звук" : "Включить звук"}
+            role="switch"
+            aria-checked={soundOn}
+            title={soundOn ? "Звук включён" : "Звук выключён"}
+          >
+            <img
+              src={soundOn ? "/icons/audio-on.svg" : "/icons/audio-off.svg"}
+              alt=""
+              draggable={false}
+            />
+          </button>
+        </div>
       </div>
 
       {/* Поле */}
@@ -299,50 +340,96 @@ export default function Game() {
             <img src={shipSrc} alt="ship" draggable={false} />
           </div>
 
-<div className="Game__gauges">
-  {/* КРЕН: текст над иконкой и крутится вместе */}
-  <div className={`gauge gauge--tilt ${tilt !== 0 ? "gauge--warn" : ""}`}>
-    <div
-      className="gauge__rotor"
-      style={{ transform: `rotate(${dialAngle}deg)` }}
-    >
-      <img
-        className="gauge__dial"
-        src="/icons/game-statuses/ship-mid.svg"
-        alt=""
-      />
-      {/* верхняя дуга */}
-      <svg className="gauge__arc gauge__arc--top" viewBox="0 0 120 70" aria-hidden="true">
-        <defs>
-    <path id="arc-tilt-top" d="M 28 24 A 30 30 0 0 1 92 24" />
-        </defs>
-        <text className="gauge__text">
-          <textPath href="#arc-tilt-top" startOffset="50%" textAnchor="middle">
-            {tiltLabel}
-          </textPath>
-        </text>
-      </svg>
-    </div>
-  </div>
+          <div className="Game__gauges">
+            {/* КРЕН: текст над иконкой и крутится вместе */}
+            <div
+              className={`gauge gauge--tilt ${tilt !== 0 ? "gauge--warn" : ""}`}
+            >
+              <div
+                className="gauge__rotor"
+                style={{ transform: `rotate(${dialAngle}deg)` }}
+              >
+                <img
+                  className="gauge__dial"
+                  src="/icons/game-statuses/ship-mid.svg"
+                  alt=""
+                />
+                {/* верхняя дуга */}
+                <svg
+                  className="gauge__arc gauge__arc--top"
+                  viewBox="0 0 120 70"
+                  aria-hidden="true"
+                >
+                  <defs>
+                    <path id="arc-tilt-top" d="M 28 24 A 30 30 0 0 1 92 24" />
+                  </defs>
+                  <text className="gauge__text">
+                    <textPath
+                      href="#arc-tilt-top"
+                      startOffset="50%"
+                      textAnchor="middle"
+                    >
+                      {tiltLabel}
+                    </textPath>
+                  </text>
+                </svg>
+              </div>
+            </div>
 
-  {/* ВЕС: текст над иконкой (без вращения) */}
-  <div className={`gauge gauge--bars ${bars >= MAX_BARS ? "gauge--warn" : ""}`}>
-    <img className="gauge__icon" src={barsIcon} alt="Вес" />
-    <svg className="gauge__arc gauge__arc--top" viewBox="0 0 120 70" aria-hidden="true">
-      <defs>
-    <path id="arc-bars-top" d="M 28 24 A 30 30 0 0 1 92 24" />
-      </defs>
-      <text className="gauge__text">
-        <textPath href="#arc-bars-top" startOffset="50%" textAnchor="middle">
-          {barsLabel}
-        </textPath>
-      </text>
-    </svg>
-  </div>
-</div>
-
+            {/* ВЕС: текст над иконкой (без вращения) */}
+            <div
+              className={`gauge gauge--bars ${
+                bars >= MAX_BARS ? "gauge--warn" : ""
+              }`}
+            >
+              <img className="gauge__icon" src={barsIcon} alt="Вес" />
+              <svg
+                className="gauge__arc gauge__arc--top"
+                viewBox="0 0 120 70"
+                aria-hidden="true"
+              >
+                <defs>
+                  <path id="arc-bars-top" d="M 28 24 A 30 30 0 0 1 92 24" />
+                </defs>
+                <text className="gauge__text">
+                  <textPath
+                    href="#arc-bars-top"
+                    startOffset="50%"
+                    textAnchor="middle"
+                  >
+                    {barsLabel}
+                  </textPath>
+                </text>
+              </svg>
+            </div>
+          </div>
         </div>
       </div>
+      {openScrollId !== null && (
+        <div
+          className="scrolls__modal"
+          role="dialog"
+          aria-modal="true"
+          onClick={closeScrollModal}
+        >
+          <div></div>
+          <div className="modal__box" onClick={(e) => e.stopPropagation()}>
+            <div className="modal__scroll">
+              <span className="modal__seal">{openScrollId}</span>
+              <p className="modal__text">{getScrollText()}</p>
+            </div>
+
+            <div className="modal__cta">
+              <Button
+                text="ЗАКРЫТЬ"
+                bg="#FFFFFF"
+                color="#000000"
+                onClick={closeScrollModal}
+              />
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
