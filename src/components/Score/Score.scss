@@ -1,0 +1,66 @@
+/* ===== Score ===== */
+
+.score {
+  width: 100%;
+  height: 56px;
+  position: relative;
+}
+
+.score__bg {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+}
+
+.score__bg::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: url("/icons/game-icons/score.svg") center / 100% 100% no-repeat;
+  z-index: 0;
+
+  filter:
+    drop-shadow(0 8px 16px rgba(0,0,0,.45))
+    drop-shadow(0 0 18px rgba(0,0,0,.30));
+}
+
+/* значения поверх фона */
+.score__val {
+  position: relative;
+  z-index: 1;
+  font-family: "YS-Text-Cond-Bold", system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+  font-size: 20px;
+  line-height: 27px;
+  white-space: nowrap;
+}
+
+/* левая половина (монеты): к центру, белый текст + тень */
+.score__bg > .score__val:first-child {
+  justify-self: end;
+  padding-right: 8px;
+  color: #fff;
+  -webkit-text-stroke: 1px #000;
+  text-shadow:
+    0 1px 0 #000,
+    0 2px 10px rgba(0,0,0,.45);
+}
+
+/* правая половина (свитки): к центру, чёрный текст + тень */
+.score__bg > .score__val:last-child {
+  justify-self: start;
+  padding-left: 38px;
+  color: #fff;
+  -webkit-text-stroke: 1px #000;
+  text-shadow:
+    0 1px 0 rgba(255,255,255,.85),
+    0 2px 10px rgba(0,0,0,.22);
+}
+
+@media (max-width: 360px) {
+  .score { height: 50px; }
+  .score__val { font-size: 16px; }
+  .score__bg > .score__val:last-child { padding-left: 32px; }
+}

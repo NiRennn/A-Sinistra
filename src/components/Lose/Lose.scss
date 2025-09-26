@@ -1,0 +1,168 @@
+.lose {
+  width: 100%;
+  min-height: 100svh;
+  background: #000 url("/images/hint-field.svg") no-repeat center / cover;
+  color: #fff;
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  padding: env(safe-area-inset-top) env(safe-area-inset-right)
+    env(safe-area-inset-bottom) env(safe-area-inset-left);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+ 
+/* фоновые элементы (как в hints) */
+.lose-score {
+  position: absolute;
+  top: 70px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 200px;
+  z-index: 10;
+} 
+.itm,
+.status-bar-item {
+  position: absolute;
+  z-index: 10;
+}
+.itm--skullR {
+  left: 25%;
+  top: 45%;
+  width: 86px;
+}
+.itm--skullL {
+  left: 50%;
+  top: 25%;
+  width: 86px;
+}
+.itm--coin {
+  left: 70%;
+  top: 45%;
+  width: 62px;
+}
+.itm--bar {
+  left: 70%;
+  top: 70%;
+  width: 86px;
+}
+.status-bar-item {
+  width: 93px;
+}
+.status-bar-item.left {
+  left: 61px;
+  bottom: 35px;
+}
+.status-bar-item.right {
+  right: 61px;
+  bottom: 35px;
+}
+
+/* лёгкий блюр под текстурой + сама текстура */
+.lose-under-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 99;
+  pointer-events: none;
+  backdrop-filter: blur(2px);
+  -webkit-backdrop-filter: blur(2px);
+  background: rgba(0, 0, 0, 0.02);
+}
+.lose-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 100;
+  pointer-events: none;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* центральная панель результата */
+.lose__panel {
+  position: absolute;
+  width: 100%;
+  inset: 0;
+  z-index: 101;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: center;
+  padding-bottom: 40px;
+  padding-top: 92px;
+
+  text-align: center;
+}
+
+.lose__crashed {
+  width: 100%;
+  position: fixed;
+  z-index: 102;
+  top: 0;
+  left: 0;
+  transform: scale(1.8) translateY(-10%);
+}
+
+.lose-info {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 50px;
+}
+
+.lose__icon {
+  width: 88px;
+  height: 88px;
+  display: block;
+  margin-bottom: 8px;
+  filter: drop-shadow(0 6px 12px rgba(0, 0, 0, 0.35));
+  z-index: 103;
+}
+
+.lose__title {
+  margin: 0 0 6px;
+  color: #000;
+  font-size: 32px;
+  line-height: 23px;
+  font-family: "YS-Text-Cond-Bold", sans-serif;
+  font-weight: 700;
+  -webkit-text-stroke: 1px #000;
+  vertical-align: middle;
+  letter-spacing: 0;
+  z-index: 103;
+}
+
+.lose__subtitle {
+  color: #000;
+  line-height: 23px;
+  letter-spacing: 0;
+  font-size: 16px;
+  margin-bottom: 18px;
+  vertical-align: middle;
+  z-index: 103;
+
+  font-family: "YS-Text-Cond-Medium", sans-serif;
+}
+
+.lose__cta {
+  width: min(343px, 92vw);
+  display: grid;
+  gap: 12px;
+  margin-bottom: env(safe-area-inset-bottom);
+    z-index: 103;
+
+}
+
+@media (max-width: 360px) {
+  .lose__title {
+    font-size: 24px;
+  }
+  .lose__icon {
+    width: 80px;
+    height: 80px;
+  }
+  .lose__subtitle {
+    font-size: 12.5px;
+  }
+}

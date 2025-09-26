@@ -1,0 +1,225 @@
+.scrolls {
+  width: 100%;
+  min-height: 100svh;
+  background: url("/images/scrolls-bg.png") center top / cover no-repeat #000;
+  color: #fff;
+  position: relative;
+  overflow: hidden;
+  padding: env(safe-area-inset-top) env(safe-area-inset-right)
+    env(safe-area-inset-bottom) env(safe-area-inset-left);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Header */
+.scrolls__hdr {
+  position: sticky;
+  top: 0;
+  z-index: 5;
+  height: 92px;
+  padding: 12px 16px 8px;
+  text-align: center;
+  display: grid;
+  grid-template-rows: auto auto;
+  align-content: end;
+  justify-items: center;
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.55), rgba(0, 0, 0, 0));
+}
+.hdr__title {
+  font-family: "YS-Text-Cond-Bold", system-ui, -apple-system, "Segoe UI", Roboto,
+    Arial, sans-serif;
+  font-weight: 900;
+  font-size: 28px;
+  line-height: 32px;
+  -webkit-text-stroke: 1px #000;
+}
+.hdr__hint {
+  margin: 6px 0 0;
+  font-size: 13px;
+  line-height: 14px;
+  text-align: center;
+  opacity: 0.9;
+}
+.hdr__btn {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  padding: 6px 10px;
+  font-size: 13px;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  background: rgba(255, 255, 255, 0.06);
+  color: #fff;
+  cursor: pointer;
+}
+.hdr__btn--right {
+  left: auto;
+  right: 12px;
+}
+
+/* Grid */
+.scrolls__grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 14px 16px;
+  padding: 22px 16px 24px;
+}
+
+.slot {
+  position: relative;
+  height: 84px;
+  border-radius: 18px;
+  display: grid;
+  place-items: center;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  outline: none;
+}
+.slot__img {
+  width: 100%;
+  max-width: 172px;
+  height: auto;
+  display: block;
+}
+
+.slot--full {
+  cursor: pointer;
+  .slot__img {
+    filter: drop-shadow(0 8px 14px rgba(0, 0, 0, 0.35));
+  }
+  .slot__badge {
+    position: absolute;
+    left: 52%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    text-align: center;
+    font-size: 18px;
+    color: #fff;
+    font-family: "YS-Text-Cond-Bold", system-ui, sans-serif;
+    -webkit-text-stroke: 1px #000;
+  }
+}
+
+.slot--empty {
+  .slot__num {
+    font-family: "YS-Text-Cond-Bold", system-ui, sans-serif;
+    font-size: 18px;
+    color: rgba(255, 255, 255, 0.92);
+  }
+}
+
+.slot__empty-badge {
+  position: absolute;
+  left: 52%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  text-align: center;
+  font-size: 18px;
+  color: #d0d0cf;
+  font-family: "YS-Text-Cond-Bold", system-ui, sans-serif;
+}
+
+@media (hover: hover) {
+  .slot--full:hover .slot__img {
+    filter: drop-shadow(0 10px 18px rgba(0, 0, 0, 0.42));
+  }
+}
+.slot--full:active .slot__img {
+  transform: translateY(1px) scale(0.995);
+}
+
+/* MODAL: затемнение + центрированный свиток на всю ширину */
+.scrolls__modal {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1000;
+  display: grid;
+  place-items: center;
+
+  padding-top: 92px;
+  padding-bottom: 40px;
+
+  background: radial-gradient(
+    120% 100% at 50% 10%,
+    rgba(0, 0, 0, 0.85) 0%,
+    rgba(0, 0, 0, 0.92) 60%,
+    rgba(0, 0, 0, 0.96) 100%
+  );
+}
+
+.modal__box {
+  width: 100%;
+  max-width: 500px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}
+.modal__scroll {
+  position: relative;
+  width: 100%;
+  max-width: 500px;
+  transform: scale(1.3);
+  aspect-ratio: 16 / 9;
+  display: grid;
+  place-items: center;
+  background: url("/icons/scrolls/open-scroll.png") center / contain no-repeat;
+  padding: 30px 35px 10px;
+}
+.modal__seal {
+  position: absolute;
+  left: 50%;
+  top: 14%;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  font-size: 34px;
+  color: #fff;
+  -webkit-text-stroke: 1px #000;
+  font-family: "YS-Text-Cond-Bold", system-ui, sans-serif;
+}
+.modal__text {
+  margin: 0;
+  color: #fff;
+  text-align: center;
+  font-family: "YS-Text-Cond-Bold", system-ui, sans-serif;
+  font-size: 18px;
+  line-height: 1.25;
+  max-width: 80%;
+}
+
+.modal__cta {
+  width: 100%;
+  padding: 0 40px;
+
+}
+
+@media (max-width: 360px) {
+  .scrolls__grid {
+    gap: 12px 12px;
+    padding: 10px 12px 20px;
+  }
+  .slot {
+    height: 78px;
+  }
+  .slot--full .slot__badge {
+    width: 28px;
+    height: 28px;
+  }
+
+
+  .modal__text {
+    font-size: 16px;
+  }
+}

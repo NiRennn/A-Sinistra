@@ -1,0 +1,307 @@
+.Game {
+  width: 100%;
+  height: 100%;
+  background: #000;
+  color: #fff;
+  position: relative;
+  overflow: hidden;
+  padding: env(safe-area-inset-top) env(safe-area-inset-right)
+    env(safe-area-inset-bottom) env(safe-area-inset-left);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  padding-top: 92px;
+  padding-bottom: 40px;
+}
+
+/* HUD */
+.Game__hud {
+  position: absolute;
+  z-index: 100;
+  top: 10%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(320px, 94vw);
+  height: auto;
+}
+ 
+/* Поле */
+.Game__field {
+  position: absolute;
+  inset: 0;
+  --gutter: 64px;
+}
+
+/* Вода */
+.Game__water {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background-image: url("/images/game-water.svg");
+  background-repeat: repeat-y;
+  background-size: 100% auto;
+  opacity: 0.95;
+  will-change: background-position;
+}
+
+.Game__banks {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: var(--gutter);
+  right: var(--gutter);
+  z-index: 1;
+  pointer-events: none;
+  user-select: none;
+
+  /* Вариант A: маска (рекомендуется) */
+  background: #000;
+  -webkit-mask-image: url("/images/river-banks-mask.png");
+  -webkit-mask-repeat: repeat-y;
+  -webkit-mask-size: 100% auto;
+  -webkit-mask-position: center var(--banks-y);
+  mask-image: url("/images/river-banks-mask.png");
+  mask-repeat: repeat-y;
+  mask-size: 100% auto;
+  mask-position: center var(--banks-y);
+  opacity: 0.95;
+  will-change: -webkit-mask-position, mask-position;
+}
+
+/* Боковые фасады */
+.Game__side {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: var(--gutter);
+  z-index: 2;
+  background-repeat: repeat-y;
+  background-size: 100% auto;
+  pointer-events: none;
+  user-select: none;
+  will-change: background-position;
+}
+.Game__side--left {
+  left: 0;
+  background-image: url("/images/houses.svg");
+  transform: translateX(-20px);
+}
+.Game__side--right {
+  right: 0;
+  background-image: url("/images/houses.svg");
+  transform: scaleX(-1) translateX(-20px);
+}
+
+/* Игровая зона */
+.Game__play {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: var(--gutter);
+  right: var(--gutter);
+  cursor: pointer;
+  overflow: hidden;
+  touch-action: none;
+}
+
+/* Линии (опционально скрыть) */
+.lanes {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+.lane {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  transform: translateX(-50%);
+  background: rgba(255, 255, 255, 0.12);
+}
+
+/* Лодка */
+.ship {
+  position: absolute;
+  top: calc(100% - 200px);
+  transform: translate(-50%, -50%);
+  transition: left 0.12s ease;
+  img {
+    width: 105px;
+    height: auto;
+    display: block;
+    filter: drop-shadow(0 10px 18px rgba(0, 0, 0, 0.45));
+  }
+}
+
+.itm {
+  position: absolute;
+  transform: translate(-35%, -50%);
+  pointer-events: none;
+  z-index: 2;
+  img {
+    display: block;
+    width: 62px;
+    height: auto;
+    filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.35));
+  }
+}
+.itm--coin img {
+  width: 40px;
+}
+.itm--bar img {
+  width: 44px;
+}
+
+/* Нижние статусы */
+.Game__gauges {
+  position: fixed;
+  left: 50%;
+  bottom: 5%;
+  transform: translateX(-50%);
+  z-index: 10;
+  display: flex;
+  // gap: 22px;
+  align-items: flex-end;
+  font-family: 'YS-Text-Cond-Regular';
+}
+.gauge {
+  width: 132px;
+  height: 92px;
+  border-radius: 18px;
+  display: grid;
+  place-items: center;
+  position: relative;
+  
+}
+
+.gauge__rotor {
+  position: relative;
+  width: 96px;
+  height: 96px;
+  display: grid;
+  place-items: center;
+  transform-origin: 50% 50%;
+}
+
+.gauge--tilt .gauge__dial,
+.gauge--bars .gauge__icon {
+  width: 80px;
+  height: 80px;
+  display: block;
+  filter: drop-shadow(0 4px 8px rgba(0,0,0,.35));
+}
+
+.gauge__arc {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 120px;
+  height: 70px;
+  overflow: visible;
+  pointer-events: none;
+}
+
+.gauge__arc--top {
+  top: 12px;       /* подвинь ближе/дальше к иконке по вкусу */
+  z-index: 2;
+}
+
+.gauge__text {
+  font-size: 16px;
+  font-weight: 700;
+  fill: #000;
+  paint-order: stroke fill;
+  stroke: #fff;
+  stroke-width: 2px;
+  // letter-spacing: .2px;
+}
+
+/* опционально — на совсем тёмном фоне усилить контраст */
+.gauge--warn .gauge__text {
+  stroke-width: 2.2px;
+}
+
+
+
+/* левый — крутилка */
+.gauge--tilt .gauge__dial {
+  width: 80px;
+  height: 80px;
+  display: block;
+  transform-origin: 50% 50%;
+  transition: transform 0.8s ease;
+  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.35));
+}
+
+/* правый — иконка веса */
+.gauge--bars .gauge__icon {
+  width: 80px;
+  height: 80px;
+  display: block;
+  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.35));
+}
+
+/* ФУЛЛСКРИН-ОВЕРЛЕЙ */
+.overlay {
+  position: absolute; /* относительно .Game */
+  inset: 0; /* ВСЯ сцена */
+  z-index: 9999;
+  display: grid;
+  place-items: center;
+  padding: 20px;
+  background: radial-gradient(
+    ellipse at center,
+    rgba(0, 0, 0, 0.6),
+    rgba(0, 0, 0, 0.9)
+  );
+  pointer-events: auto; /* перекрываем клики по полю */
+
+  .overlay__content {
+    text-align: center;
+    max-width: 90vw;
+  }
+
+  h2 {
+    margin: 0 0 8px;
+    font-size: 28px;
+  }
+  p {
+    margin: 0 0 16px;
+    opacity: 0.9;
+  }
+  .overlay__btns button {
+    background: #fff;
+    color: #000;
+    border: 0;
+    border-radius: 999px;
+    padding: 14px 20px;
+    font-weight: 700;
+    cursor: pointer;
+  }
+}
+.overlay--win {
+  background: radial-gradient(
+    ellipse at center,
+    rgba(0, 60, 0, 0.5),
+    rgba(0, 0, 0, 0.9)
+  );
+}
+.overlay--lose {
+  background: radial-gradient(
+    ellipse at center,
+    rgba(60, 0, 0, 0.5),
+    rgba(0, 0, 0, 0.9)
+  );
+}
+
+/* Адаптив */
+@media (max-width: 360px) {
+  .ship img {
+    width: 58px;
+  }
+  .itm img {
+    width: 40px;
+  }
+  .Game__field {
+    --gutter: 56px;
+  }
+}

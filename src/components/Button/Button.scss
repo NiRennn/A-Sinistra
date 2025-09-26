@@ -1,0 +1,44 @@
+.button {
+  --btn-bg: #fff;
+  --btn-fg: #000;
+  --btn-tt: none;
+  --btn-bor: none;
+
+  width: 100%;
+  // max-width: 313px;
+  height: 63px;
+  padding: 12px 20px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+
+
+
+  background: var(--btn-bg);
+  color: var(--btn-fg);
+  text-transform: var(--btn-tt);
+  border: var(--btn-bor);
+  border-radius: 123px;
+  cursor: pointer;
+  font-size: 18px;
+    font-family: 'YS-Text-Cond-Medium', sans-serif;
+
+  transition: transform .06s ease, filter .15s ease;
+
+  &:hover { filter: brightness(1.02); }
+  &:active { transform: translateY(1px) scale(.99); }
+  &:disabled { opacity: .6; cursor: not-allowed; }
+
+  &.button--block { width: 100%; }
+}
+
+
+
+@supports not ((-webkit-backdrop-filter: blur(1px)) or (backdrop-filter: blur(1px))) {
+  .button--glass {
+    background: color-mix(in srgb, var(--btn-bg) 30%, transparent);
+  }
+}

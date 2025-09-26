@@ -1,0 +1,126 @@
+.Loading {
+  width: 100%;
+  height: 100%;
+
+  padding: env(safe-area-inset-top) env(safe-area-inset-right)
+    env(safe-area-inset-bottom) env(safe-area-inset-left);
+  overflow: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.Loading__content {
+  height: 100%;
+  width: 100%;
+  display: grid;
+  grid-template-rows: 1fr auto;
+}
+
+.Loading__top {
+  background-color: #000;
+  width: 100%;
+  padding-top: clamp(56px, 7vh, 92px);
+  padding-bottom: clamp(20px, 5vh, 40px);
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  gap: clamp(12px, 3vh, 24px);
+}
+
+.Loading__logo {
+  width: 100%;
+  max-width: clamp(140px, 38vw, 194px);
+  opacity: 0.95;
+}
+
+.Loading__skull {
+  width: clamp(200px, 55vw, 265px);
+  height: auto;
+  user-select: none;
+  pointer-events: none;
+}
+
+.Loading__sinistra {
+  width: 100%;
+  max-width: clamp(170px, 50vw, 240px);
+  padding-bottom: 30px;
+}
+
+.Loading__bot {
+  position: relative;
+  background-color: #000;
+
+  width: 100%;
+  background: url("/images/loader-waves.png") no-repeat center / cover;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+
+  padding-bottom: clamp(18px, 4vh, 36px);
+  padding-top: clamp(28px, 6vh, 48px);
+  min-height: clamp(120px, 28vh, 200px);
+}
+
+.Loading__ship {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: clamp(120px, 40vw, 168px);
+  transform: translate(-50%, -65%);
+  pointer-events: none;
+}
+
+@media (max-height: 700px) {
+  .Loading__top {
+    padding-top: 56px;
+    padding-bottom: 20px;
+    gap: 14px;
+  }
+  .Loading__skull {
+    width: clamp(160px, 48vw, 230px);
+  }
+  .Loading__sinistra {
+    max-width: 210px;
+  }
+  .Loading__bot {
+    min-height: 120px;
+    padding-top: 32px;
+  }
+}
+
+@media (max-width: 360px) {
+  .Loading__logo {
+    max-width: 168px;
+  }
+  .Loading__skull {
+    width: clamp(150px, 60vw, 210px);
+  }
+  .Loading__sinistra {
+    max-width: 200px;
+  }
+  .Loading__bot {
+    padding-bottom: 24px;
+  }
+}
+
+@media (orientation: landscape) and (max-height: 480px) {
+  .Loading__top {
+    padding-top: 32px;
+    padding-bottom: 16px;
+    gap: 12px;
+  }
+  .Loading__skull {
+    width: clamp(140px, 30vw, 200px);
+  }
+  .Loading__sinistra {
+    max-width: 180px;
+  }
+  .Loading__bot {
+    min-height: 136px;
+    padding-top: 36px;
+    padding-bottom: 20px;
+  }
+}
